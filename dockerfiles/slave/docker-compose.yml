@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+    jenkins1:
+        image: jenkins/jenkins
+        container_name: jenkins
+        networks:
+        - bridge
+        ports:
+        - "8880:8080"
+        - "50000:50000"
+        volumes:
+        - /home/panda/jenkins:/var/jenkins_home
+    ubuntu1:
+        build: jenkins_slave/
+        container_name: ubuntu
+        networks:
+        - bridge
+        depends_on:
+        - "jenkins1"
+
+networks:
+   bridge:
